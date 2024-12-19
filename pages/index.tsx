@@ -1,17 +1,12 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import {
-  Client,
-  Contact,
-  Faq,
-  Hero,
-  Products,
-  Testimoni,
-  WhyUs,
-  Banner,
-} from "../components";
+import { Contact, Hero, Testimoni, WhyUs, Banner } from "../components";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
+import { GetStaticProps } from "next";
 
 export default function HomePage() {
+  const { t } = useTranslation("common");
   const router = useRouter();
   const onClickToDemo = () => {
     router.push("/demo");
@@ -19,18 +14,25 @@ export default function HomePage() {
   return (
     <div>
       <Head>
-        <title>Memos</title>
-        <meta name="description" content="Landing page of Memos" />
+        <title>Notes</title>
+        <meta name="description" content="Landing page of Notes" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className="mt-[5.5rem]">
-        <Hero onClickToDemo={onClickToDemo} />
-        <WhyUs />
-        <Testimoni />
-        <Contact />
-        <Banner onClickToDemo={onClickToDemo} />
+        <Hero t={t} onClickToDemo={onClickToDemo} />
+        <WhyUs t={t} />
+        <Testimoni t={t} />
+        <Contact t={t} />
+        <Banner t={t} onClickToDemo={onClickToDemo} />
       </main>
     </div>
   );
 }
+
+export const getStaticProps: GetStaticProps<any> = async ({ locale }) => ({
+  props: {
+    locale,
+    ...(await serverSideTranslations(locale ?? "id", ["common"])),
+  },
+});

@@ -1,70 +1,77 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Squash as Hamburger } from "hamburger-react";
+import { useTranslation } from "next-i18next";
 
 import { useRouter } from "next/router";
-import React, { Dispatch } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { Button, Dropdown, SearchBox } from "..";
 import { ChevronRightIcon } from "../Icons";
 import { useSearchDebounce } from "../../hooks";
+import type { Language } from "../Ui/Dropdown";
+import { TFunction } from "i18next";
 
 const languageList = [
+  // {
+  //   id: "sa",
+  //   label: "Arabian",
+  // },
+  // {
+  //   id: "al",
+  //   label: "Albanian",
+  // },
+  // {
+  //   id: "az",
+  //   label: "Azerbaijani",
+  // },
+  // {
+  //   id: "ba",
+  //   label: "Baluchi",
+  // },
   {
-    id: "sa",
-    label: "Arabian",
+    id: "en",
+    label: "English",
   },
-  {
-    id: "al",
-    label: "Albanian",
-  },
-  {
-    id: "az",
-    label: "Azerbaijani",
-  },
-  {
-    id: "ba",
-    label: "Baluchi",
-  },
-  {
-    id: "ph",
-    label: "Filipino",
-  },
-  {
-    id: "fr",
-    label: "French",
-  },
-  {
-    id: "gr",
-    label: "German",
-  },
-  {
-    id: "gk",
-    label: "Greek",
-  },
+  // {
+  //   id: "ph",
+  //   label: "Filipino",
+  // },
+  // {
+  //   id: "fr",
+  //   label: "French",
+  // },
+  // {
+  //   id: "gr",
+  //   label: "German",
+  // },
+  // {
+  //   id: "gk",
+  //   label: "Greek",
+  // },
   {
     id: "id",
     label: "Indonesia",
   },
-  {
-    id: "li",
-    label: "Lithuanian",
-  },
-  {
-    id: "my",
-    label: "Malay",
-  },
-  {
-    id: "se",
-    label: "Serbian",
-  },
-  {
-    id: "sp",
-    label: "Spanish",
-  },
-  {
-    id: "sh",
-    label: "Swahili",
-  },
+  // {
+  //   id: "li",
+  //   label: "Lithuanian",
+  // },
+  // {
+  //   id: "my",
+  //   label: "Malay",
+  // },
+  // {
+  //   id: "se",
+  //   label: "Serbian",
+  // },
+  // {
+  //   id: "sp",
+  //   label: "Spanish",
+  // },
+  // {
+  //   id: "sh",
+  //   label: "Swahili",
+  // },
 ];
 
 interface NavMenuMobileProps {
@@ -78,6 +85,10 @@ interface NavMenuMobileProps {
   searchTerm: string;
   onClickToDemo: () => void;
   visible: boolean;
+  setIsChangeLanguageMode: Dispatch<SetStateAction<boolean>>;
+  t: TFunction<"common", undefined>;
+  onChangeLanguage: (lang: string) => void;
+  locale: string | undefined;
 }
 
 function NavMenuMobile({
@@ -91,6 +102,10 @@ function NavMenuMobile({
   searchTerm,
   onClickToDemo,
   visible,
+  setIsChangeLanguageMode,
+  t,
+  onChangeLanguage,
+  locale,
 }: NavMenuMobileProps) {
   return (
     <div
@@ -111,8 +126,68 @@ function NavMenuMobile({
           />
         </div>
 
-        {/* <Hamburger toggled={isOpen} toggle={setOpen} /> */}
+        <Hamburger
+          toggled={isOpen}
+          onToggle={() => {
+            setOpen(!isOpen);
+            setIsChangeLanguageMode(false);
+          }}
+        />
       </header>
+      {!isChangeLanguageMode ? (
+        <div
+          className={`transition-all ${
+            isOpen ? "h-screen" : "h-0 hidden"
+          } bg-white px-4 py-4 mt-2 relative w-full`}
+        >
+          <nav id="menus" className="flex-col flex gap-8 text-base">
+            <div
+              onClick={onClickLanguage}
+              className="hover:text-primary-500 cursor-pointer flex justify-between items-center"
+            >
+              {locale === "id" ? "Bahasa Indonesia" : "English"}
+              <ChevronRightIcon className="w-3 h-3" />
+            </div>
+          </nav>
+
+          <div className="absolute -translate-x-1/2 left-1/2 transform w-full bottom-32 flex flex-col items-center gap-4 px-4 justify-center">
+            <Button
+              title={t("navbar.tryDemo")}
+              isPrimary
+              className="w-full lg:w-auto"
+              onClick={onClickToDemo}
+            />
+            <Button
+              title={t("navbar.consultYourNeeds")}
+              isPrimary={false}
+              className="w-full lg:w-auto"
+            />
+          </div>
+        </div>
+      ) : (
+        <div
+          className={`transition-all ${
+            isOpen ? "h-screen" : "h-0 hidden"
+          } bg-white px-4 py-4 mt-2 relative w-full`}
+        >
+          <SearchBox onSearch={onSearchLanguage} />
+          <ul className="h-[75%] overflow-x-auto mt-4 flex flex-col gap-2">
+            {languageList
+              ?.filter((item) => item?.label.toLowerCase().includes(searchTerm))
+              .map((language) => (
+                <li
+                  onClick={() => onChangeLanguage(language?.id)}
+                  className={`w-full py-3 ${
+                    locale === language?.id ? "bg-primary-100 rounded-full" : ""
+                  }`}
+                  key={language?.id}
+                >
+                  <div className="mx-3 rounded-lg">{language?.label}</div>
+                </li>
+              ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
@@ -123,12 +198,22 @@ interface NavMenuDesktopProps {
   onClickLogo: () => void;
   visible: boolean;
   onClickToDemo: () => void;
+  onChangeLanguage: (lang: string) => void;
+  locale: string | undefined;
+  languages: Language[];
+  t: TFunction<"common", undefined>;
 }
 
 function NavMenuDesktop({
+  pathname,
+  isHome,
   onClickLogo,
   visible,
   onClickToDemo,
+  onChangeLanguage,
+  locale,
+  languages,
+  t,
 }: NavMenuDesktopProps) {
   return (
     <div
@@ -151,8 +236,16 @@ function NavMenuDesktop({
 
         {/* Right section */}
         <div id="right" className="hidden lg:flex gap-3">
-          <Dropdown title="ID" />
-          <Button title="Coba Demo Gratis" isPrimary onClick={onClickToDemo} />
+          <Dropdown
+            currentLanguage={locale?.toUpperCase() ?? ""}
+            languages={languages}
+            onChangeLanguage={onChangeLanguage}
+          />
+          <Button
+            title={t("navbar.tryDemo")}
+            isPrimary
+            onClick={onClickToDemo}
+          />
         </div>
       </header>
     </div>
@@ -161,14 +254,27 @@ function NavMenuDesktop({
 
 export function Header() {
   const router = useRouter();
-  const { asPath, pathname } = router;
+  const { asPath, pathname, locale } = router;
   const isHome = asPath === "/";
+  const [language, setLanguage] = React.useState(locale);
   const [isOpen, setOpen] = React.useState(false);
   const [isChangeLanguageMode, setIsChangeLanguageMode] = React.useState(false);
   const [searchTerm, setSearchTerm] = useSearchDebounce();
 
   const [prevScrollPos, setPrevScrollPos] = React.useState(0);
   const [visible, setVisible] = React.useState(true);
+  const { t } = useTranslation("common");
+  const languages = [
+    {
+      id: "id",
+      label: "ID",
+    },
+    {
+      id: "en",
+      label: "ENG",
+    },
+  ];
+
   const onClickLogo = () => {
     router.push("/");
   };
@@ -202,6 +308,34 @@ export function Header() {
     setPrevScrollPos(currentScrollPos);
   };
 
+  const onSubmitLanguage = () => {
+    const url = window.location.href;
+    const origin = window.location.origin;
+    let sliced = url.split(origin)[1];
+
+    if (language !== "en") {
+      sliced = sliced.replace("/en", "");
+    } else {
+      sliced = "/en" + sliced;
+    }
+
+    window.location.href = origin + sliced;
+  };
+
+  const onChangeLanguage = (lang: string) => {
+    const url = window.location.href;
+    const origin = window.location.origin;
+    let sliced = url.split(origin)[1];
+    if (locale !== "id") {
+      console.log("ke id");
+      sliced = sliced.replace(`/${locale}`, "");
+    } else {
+      sliced = `/${lang}` + sliced;
+    }
+
+    window.location.href = origin + sliced;
+  };
+
   React.useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
@@ -215,6 +349,10 @@ export function Header() {
         onClickLogo={onClickLogo}
         visible={visible}
         onClickToDemo={onClickToDemo}
+        onChangeLanguage={onChangeLanguage}
+        languages={languages}
+        locale={locale}
+        t={t}
       />
       <NavMenuMobile
         visible={visible}
@@ -227,6 +365,10 @@ export function Header() {
         onSearchLanguage={onSearchLanguage}
         searchTerm={searchTerm as string}
         onClickToDemo={onClickToDemo}
+        setIsChangeLanguageMode={setIsChangeLanguageMode}
+        t={t}
+        onChangeLanguage={onChangeLanguage}
+        locale={locale}
       />
     </>
   );

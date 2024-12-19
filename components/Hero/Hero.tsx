@@ -3,12 +3,14 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 import { maxWidthContainer } from "../../constants/class";
 import { Button } from "../Ui";
+import { TFunction } from "i18next";
 
 interface HeroProps {
   onClickToDemo: () => void;
+  t: TFunction<"common", undefined>;
 }
 
-export function Hero({ onClickToDemo }: HeroProps) {
+export function Hero({ onClickToDemo, t }: HeroProps) {
   return (
     <div
       id="hero"
@@ -20,23 +22,20 @@ export function Hero({ onClickToDemo }: HeroProps) {
       {/* Our Words */}
       <div id="our-words" className="lg:px-16 lg:max-w-[40rem]">
         <h1 className="text-[32px] font-bold text-center lg:text-left">
-          Solusi Transformasi Digital untuk Masa Depan Layanan Kesehatan yang
-          Optimal
+          {t("home.heroHeadline")}
         </h1>
         <p className="mt-4 text-base text-center lg:text-left">
-          CRM Healthcare Solution Platform No. 1 di Indonesia yang menghadirkan
-          sistem informasi kesehatan terintegrasi untuk layanan kesehatan yang
-          lebih optimal
+          {t("home.heroSubHeadline")}
         </p>
         <div className="flex flex-col lg:flex-row items-center gap-4 mt-8">
           <Button
-            title="Coba Demo Gratis"
+            title={t("home.tryDemo")}
             isPrimary
             className="w-full lg:w-auto"
             onClick={onClickToDemo}
           />
           <Button
-            title="Konsultasi Kebutuhan Anda"
+            title={t("home.consultYourNeeds")}
             isPrimary={false}
             className="w-full lg:w-auto"
           />

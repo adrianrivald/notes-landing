@@ -1,5 +1,5 @@
 {
-  "name": "memos-landing",
+  "name": "notes-landing",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -16,9 +16,12 @@
     "eslint": "9.16.0",
     "eslint-config-next": "15.0.3",
     "hamburger-react": "^2.5.1",
+    "i18next": "^23.16.4",
     "next": "13.0.6",
+    "next-i18next": "^15.4.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "react-i18next": "^15.1.0",
     "swiper": "^11.1.15",
     "tailwind-merge": "^2.5.5",
     "typescript": "5.7.2"

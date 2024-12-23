@@ -38,33 +38,26 @@ export function Footer() {
           <div className="font-bold text-neutral-500">
             {t("footer.ourSocmed")}
             <div className="flex items-center gap-4 mt-2">
-              <Link
+              {/* <Link
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <FacebookRoundedIcon />
-              </Link>
+              </Link> */}
               <Link
-                href="https://instagram.com"
+                href="https://www.instagram.com/notes_idn?igsh=MTh2dHZjeGFkc252dQ=="
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <InstagramRoundedIcon />
               </Link>
               <Link
-                href="https://linkedin.com"
+                href="https://id.linkedin.com/company/pt-cipta-integrasi-nusantara"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <LinkedInRoundedIcon />
-              </Link>
-              <Link
-                href="https://x.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <TwitterRoundedIcon />
               </Link>
             </div>
           </div>
@@ -106,7 +99,9 @@ export function Footer() {
         {/* Pengetahuan */}
         <div className="flex flex-col gap-4 flex-none ">
           <div className="font-bold">{t("footer.knowledge")}</div>
-          <Link href="/article">{t("footer.article")}</Link>
+          <Link href="https://memos-landing.vercel.app/articles">
+            {t("footer.article")}
+          </Link>
           <Link href="/">{t("footer.faq")}</Link>
           <Link href="/">{t("footer.privacy")}</Link>
           <Link href="/">{t("footer.terms")}</Link>

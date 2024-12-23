@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { Contact, Hero, Testimoni, WhyUs, Banner } from "../components";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
@@ -7,10 +6,7 @@ import { GetStaticProps } from "next";
 
 export default function HomePage() {
   const { t } = useTranslation("common");
-  const router = useRouter();
-  const onClickToDemo = () => {
-    router.push("/demo");
-  };
+
   return (
     <div>
       <Head>
@@ -20,11 +16,11 @@ export default function HomePage() {
       </Head>
 
       <main className="mt-[5.5rem]">
-        <Hero t={t} onClickToDemo={onClickToDemo} />
+        <Hero t={t} />
         <WhyUs t={t} />
         <Testimoni t={t} />
         <Contact t={t} />
-        <Banner t={t} onClickToDemo={onClickToDemo} />
+        <Banner t={t} />
       </main>
     </div>
   );

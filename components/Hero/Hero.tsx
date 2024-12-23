@@ -4,13 +4,13 @@ import { twMerge } from "tailwind-merge";
 import { maxWidthContainer } from "../../constants/class";
 import { Button } from "../Ui";
 import { TFunction } from "i18next";
+import Link from "next/link";
 
 interface HeroProps {
-  onClickToDemo: () => void;
   t: TFunction<"common", undefined>;
 }
 
-export function Hero({ onClickToDemo, t }: HeroProps) {
+export function Hero({ t }: HeroProps) {
   return (
     <div
       id="hero"
@@ -28,12 +28,13 @@ export function Hero({ onClickToDemo, t }: HeroProps) {
           {t("home.heroSubHeadline")}
         </p>
         <div className="flex flex-col lg:flex-row items-center gap-4 mt-8">
-          <Button
-            title={t("home.tryDemo")}
-            isPrimary
-            className="w-full lg:w-auto"
-            onClick={onClickToDemo}
-          />
+          <Link href="https://memos-landing.vercel.app/demo" target="_blank">
+            <Button
+              title={t("home.tryDemo")}
+              isPrimary
+              className="w-full lg:w-auto"
+            />
+          </Link>
           <Button
             title={t("home.consultYourNeeds")}
             isPrimary={false}

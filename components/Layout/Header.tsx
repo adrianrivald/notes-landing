@@ -83,7 +83,6 @@ interface NavMenuMobileProps {
   isChangeLanguageMode: boolean;
   onSearchLanguage: (e: React.ChangeEvent<HTMLInputElement>) => void;
   searchTerm: string;
-  onClickToDemo: () => void;
   visible: boolean;
   setIsChangeLanguageMode: Dispatch<SetStateAction<boolean>>;
   t: TFunction<"common", undefined>;
@@ -100,7 +99,6 @@ function NavMenuMobile({
   isChangeLanguageMode,
   onSearchLanguage,
   searchTerm,
-  onClickToDemo,
   visible,
   setIsChangeLanguageMode,
   t,
@@ -151,12 +149,13 @@ function NavMenuMobile({
           </nav>
 
           <div className="absolute -translate-x-1/2 left-1/2 transform w-full bottom-32 flex flex-col items-center gap-4 px-4 justify-center">
-            <Button
-              title={t("navbar.tryDemo")}
-              isPrimary
-              className="w-full lg:w-auto"
-              onClick={onClickToDemo}
-            />
+            <Link href="https://memos-landing.vercel.app/demo" target="_blank">
+              <Button
+                title={t("navbar.tryDemo")}
+                isPrimary
+                className="w-full lg:w-auto"
+              />
+            </Link>
             <Button
               title={t("navbar.consultYourNeeds")}
               isPrimary={false}
@@ -197,7 +196,6 @@ interface NavMenuDesktopProps {
   isHome: boolean;
   onClickLogo: () => void;
   visible: boolean;
-  onClickToDemo: () => void;
   onChangeLanguage: (lang: string) => void;
   locale: string | undefined;
   languages: Language[];
@@ -209,7 +207,6 @@ function NavMenuDesktop({
   isHome,
   onClickLogo,
   visible,
-  onClickToDemo,
   onChangeLanguage,
   locale,
   languages,
@@ -241,11 +238,9 @@ function NavMenuDesktop({
             languages={languages}
             onChangeLanguage={onChangeLanguage}
           />
-          <Button
-            title={t("navbar.tryDemo")}
-            isPrimary
-            onClick={onClickToDemo}
-          />
+          <Link href="https://memos-landing.vercel.app/demo" target="_blank">
+            <Button title={t("navbar.tryDemo")} isPrimary />
+          </Link>
         </div>
       </header>
     </div>
@@ -277,10 +272,6 @@ export function Header() {
 
   const onClickLogo = () => {
     router.push("/");
-  };
-
-  const onClickToDemo = () => {
-    router.push("/demo");
   };
 
   React.useEffect(() => {
@@ -348,7 +339,6 @@ export function Header() {
         isHome={isHome}
         onClickLogo={onClickLogo}
         visible={visible}
-        onClickToDemo={onClickToDemo}
         onChangeLanguage={onChangeLanguage}
         languages={languages}
         locale={locale}
@@ -364,7 +354,6 @@ export function Header() {
         isChangeLanguageMode={isChangeLanguageMode}
         onSearchLanguage={onSearchLanguage}
         searchTerm={searchTerm as string}
-        onClickToDemo={onClickToDemo}
         setIsChangeLanguageMode={setIsChangeLanguageMode}
         t={t}
         onChangeLanguage={onChangeLanguage}

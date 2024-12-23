@@ -35,11 +35,13 @@ export function Hero({ t }: HeroProps) {
               className="w-full lg:w-auto"
             />
           </Link>
-          <Button
-            title={t("home.consultYourNeeds")}
-            isPrimary={false}
-            className="w-full lg:w-auto"
-          />
+          <a href="mailto:info@notes.co.id">
+            <Button
+              title={t("home.consultYourNeeds")}
+              isPrimary={false}
+              className="w-full lg:w-auto"
+            />
+          </a>
         </div>
       </div>
 

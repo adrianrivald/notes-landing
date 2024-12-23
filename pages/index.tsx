@@ -18,7 +18,7 @@ export default function HomePage() {
       <main className="mt-[5.5rem]">
         <Hero t={t} />
         <WhyUs t={t} />
-        <Testimoni t={t} />
+        {/* <Testimoni t={t} /> */}
         <Contact t={t} />
         <Banner t={t} />
       </main>

@@ -98,6 +98,7 @@ export function Footer() {
 
         {/* Pengetahuan */}
         <div className="flex flex-col gap-4 flex-none ">
+          <div className="font-bold">{t("footer.knowledge")}</div>
           <Link href="https://memos-landing.vercel.app/article" target="_blank">
             {t("footer.article")}
           </Link>

@@ -5,6 +5,7 @@ import { maxWidthContainer } from "../../constants/class";
 import { Button } from "../Ui";
 import { TFunction } from "i18next";
 import Link from "next/link";
+import { Fade } from "react-awesome-reveal";
 
 interface HeroProps {
   t: TFunction<"common", undefined>;
@@ -20,39 +21,47 @@ export function Hero({ t }: HeroProps) {
       )}
     >
       {/* Our Words */}
-      <div id="our-words" className="lg:px-16 lg:max-w-[40rem]">
-        <h1 className="text-[32px] font-bold text-center lg:text-left">
-          {t("home.heroHeadline")}
-        </h1>
-        <p className="mt-4 text-base text-center lg:text-left">
-          {t("home.heroSubHeadline")}
-        </p>
-        <div className="flex flex-col lg:flex-row items-center gap-4 mt-8">
-          <Link href="https://memos.co.id/demo" target="_blank">
-            <Button
-              title={t("home.tryDemo")}
-              isPrimary
+      <Fade direction="left" triggerOnce>
+        <div id="our-words" className="lg:px-16 lg:max-w-[40rem]">
+          <h1 className="text-[32px] font-bold text-center lg:text-left">
+            {t("home.heroHeadline")}
+          </h1>
+          <p className="mt-4 text-base text-center lg:text-left">
+            {t("home.heroSubHeadline")}
+          </p>
+          <div className="flex flex-col lg:flex-row items-center gap-4 mt-8">
+            <Link
+              href="https://memos.co.id/demo"
+              target="_blank"
               className="w-full lg:w-auto"
-            />
-          </Link>
-          <a href="mailto:info@notes.co.id">
-            <Button
-              title={t("home.consultYourNeeds")}
-              isPrimary={false}
-              className="w-full lg:w-auto"
-            />
-          </a>
+            >
+              <Button
+                title={t("home.tryDemo")}
+                isPrimary
+                className="w-full lg:w-auto"
+              />
+            </Link>
+            <a href="mailto:info@notes.co.id" className="w-full lg:w-auto">
+              <Button
+                title={t("home.consultYourNeeds")}
+                isPrimary={false}
+                className="w-full lg:w-auto"
+              />
+            </a>
+          </div>
         </div>
-      </div>
+      </Fade>
 
       {/* Hero image */}
-      <Image
-        src="/assets/images/hero.png"
-        width={591}
-        height={620}
-        alt="doctor"
-        className="w-full lg:w-1/2"
-      />
+      <Fade direction="right" triggerOnce className="w-full lg:w-1/2">
+        <Image
+          src="/assets/images/hero.png"
+          width={591}
+          height={620}
+          alt="doctor"
+          className="w-full"
+        />
+      </Fade>
     </div>
   );
 }

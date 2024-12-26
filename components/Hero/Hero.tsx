@@ -28,7 +28,7 @@ export function Hero({ t }: HeroProps) {
           {t("home.heroSubHeadline")}
         </p>
         <div className="flex flex-col lg:flex-row items-center gap-4 mt-8">
-          <Link href="https://memos-landing.vercel.app/demo" target="_blank">
+          <Link href="https://memos.co.id/demo" target="_blank">
             <Button
               title={t("home.tryDemo")}
               isPrimary

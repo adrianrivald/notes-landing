@@ -74,21 +74,21 @@ export function Footer() {
         <div className="flex flex-col gap-4 flex-none ">
           <div className="font-bold">{t("footer.product")}</div>
           <Link
-            href="https://memos-landing.vercel.app"
+            href="https://memos.co.id"
             target="_blank"
             rel="noopener noreferrer"
           >
             Memos
           </Link>
           <Link
-            href="https://notes-landing.vercel.app"
+            href="https://notes.co.id"
             target="_blank"
             rel="noopener noreferrer"
           >
             Notes
           </Link>
           <Link
-            href="https://clinix-landing.vercel.app"
+            href="https://clinix.id"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -99,11 +99,11 @@ export function Footer() {
         {/* Pengetahuan */}
         <div className="flex flex-col gap-4 flex-none ">
           <div className="font-bold">{t("footer.knowledge")}</div>
-          <Link href="https://memos-landing.vercel.app/article" target="_blank">
+          <Link href="https://memos.co.id/article" target="_blank">
             {t("footer.article")}
           </Link>
           <Link
-            href="https://memos-landing.vercel.app/?section=faq"
+            href="https://memos.co.id/?section=faq"
             target="_blank"
             className="cursor-pointer"
           >

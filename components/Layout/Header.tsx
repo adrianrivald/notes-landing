@@ -149,7 +149,7 @@ function NavMenuMobile({
           </nav>
 
           <div className="absolute -translate-x-1/2 left-1/2 transform w-full bottom-32 flex flex-col items-center gap-4 px-4 justify-center">
-            <Link href="https://memos-landing.vercel.app/demo" target="_blank">
+            <Link href="https://memos.co.id/demo" target="_blank">
               <Button
                 title={t("navbar.tryDemo")}
                 isPrimary
@@ -238,7 +238,7 @@ function NavMenuDesktop({
             languages={languages}
             onChangeLanguage={onChangeLanguage}
           />
-          <Link href="https://memos-landing.vercel.app/demo" target="_blank">
+          <Link href="https://memos.co.id/demo" target="_blank">
             <Button title={t("navbar.tryDemo")} isPrimary />
           </Link>
         </div>

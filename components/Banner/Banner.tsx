@@ -19,7 +19,7 @@ export function Banner({ t }: BannerProps) {
           <h2 className="text-[24px] lg:text-[36px] text-center lg:text-left text-white mb-8 font-bold">
             {t("home.bannerHeading")}
           </h2>
-          <Link href="https://memos-landing.vercel.app/demo" target="_blank">
+          <Link href="https://memos.co.id/demo" target="_blank">
             <Button title={t("home.tryDemo")} className="w-[220px]" />
           </Link>
           <img

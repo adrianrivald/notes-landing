@@ -1,14 +1,17 @@
 import { Listbox, Transition } from "@headlessui/react";
-import Image from "next/image";
+import emailjs from "@emailjs/browser";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { Fragment } from "react";
+import React, { Fragment, useRef } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import { maxWidthContainer } from "../../../constants/class";
 import { useSearchDebounce } from "../../../hooks";
 import { ArrowDownIcon, ArrowRightBlueIcon, SuccessDemo } from "../../Icons";
 import { SearchBox } from "../../SearchBox/SearchBox";
 import { Button } from "../../Ui";
+import { TFunction } from "i18next";
+import { ToastContainer, toast } from "react-toastify";
 
 interface SelectProps {
   label: string;
@@ -18,38 +21,38 @@ interface SelectProps {
 const companies: SelectProps[] = [
   {
     id: "verySmall",
-    label: "< 5 Employees",
+    label: "< 5",
   },
   {
     id: "small",
-    label: "5 - 20 Employees",
+    label: "5 - 20",
   },
   {
     id: "medium",
-    label: "20 - 50 Employees",
+    label: "20 - 50",
   },
   {
     id: "big",
-    label: "50 - 250 Employees",
+    label: "50 - 250",
   },
   {
     id: "veryBig",
-    label: ">250 Employees",
+    label: ">250",
   },
 ];
 
 const interests: SelectProps[] = [
   {
     id: "1",
-    label: "Use it in my company",
+    label: "interestOpt1",
   },
   {
     id: "2",
-    label: "Offer Memos services to other companies",
+    label: "interestOpt2",
   },
   {
     id: "3",
-    label: "I am a Doctor",
+    label: "interestOpt3",
   },
 ];
 
@@ -111,7 +114,11 @@ const languages: SelectProps[] = [
     label: "Swahili",
   },
 ];
-export function DemoContent() {
+interface DemoContentProps {
+  t: TFunction<"common", undefined>;
+}
+
+export function DemoContent({ t }: DemoContentProps) {
   const router = useRouter();
   const [isSubmitted, setIsSubmitted] = React.useState(false);
   const [selectedCountry, setSelectedCountry] = React.useState<SelectProps>();
@@ -119,16 +126,53 @@ export function DemoContent() {
   const [selectedCompany, setSelectedCompany] = React.useState<SelectProps>();
   const [selectedInterest, setSelectedInterest] = React.useState<SelectProps>();
   const [searchTerm, setSearchTerm] = useSearchDebounce();
+  const { register, handleSubmit, watch } = useForm<any>();
+  const form = useRef() as any;
+
+  React.useEffect(() => {
+    setIsSubmitted(false);
+  }, []);
 
   const onSearchCountry = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchTerm(value);
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    console.log("submitted");
-    setIsSubmitted(true);
+  const formValues = {
+    name: watch("name"),
+    email: watch("email"),
+    company_name: watch("company_name"),
+    phone: watch("phone"),
+    country: selectedCountry?.label,
+    language: selectedLanguage?.label,
+    company_size: `${selectedCompany?.label} ${t("demo.employee")}`,
+    interest: t(`demo.${selectedInterest?.label}`),
+    product: "Notes",
+  };
+
+  const onSubmit: SubmitHandler<any> = async () => {
+    await emailjs
+      .send("service_88q7rha", "template_y2v0ioo", formValues, {
+        publicKey: "7jPcAfzPeqFQ_mf4c",
+      })
+      .then(
+        () => {
+          setIsSubmitted(true);
+        },
+        (error) => {
+          const errorMessage = error?.text ?? t("home.errorSubmitForm");
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+      );
   };
 
   const onClickHome = () => {
@@ -142,43 +186,41 @@ export function DemoContent() {
     >
       <div className="lg:mx-36">
         {!isSubmitted ? (
-          <form onSubmit={handleSubmit}>
+          <form ref={form} onSubmit={handleSubmit(onSubmit)}>
             <div className="shadow-md w-full p-8 rounded-lg border border-neutral-250">
-              <h2 className="font-bold">Talk with our sales team</h2>
-              <h3 className="mt-2">
-                Fill out your information and a Memos representative will reach
-                out to you.
-              </h3>
+              <h2 className="font-bold">{t("demo.demoHeading")}</h2>
+              <h3 className="mt-2">{t("demo.demoSubHeading")}</h3>
               <div className="flex flex-col gap-8 mt-6">
                 <div className="flex flex-col gap-4">
                   {/* Row 1 */}
                   <div className="flex flex-col lg:flex-row justify-between gap-4">
                     <div className="w-full flex flex-col gap-2">
                       <label className="text-[14px] font-medium" htmlFor="name">
-                        Name <span className="text-warning">*</span>
+                        {t("demo.demoFieldName")}{" "}
+                        <span className="text-warning">*</span>
                       </label>
                       <input
                         id="name"
-                        name="name"
+                        {...register("name", { required: true })}
                         type="text"
                         className="rounded-md p-4 border border-neutral-100 focus:outline-none"
-                        placeholder="Input Name"
+                        placeholder={t("demo.demoFieldNamePh")}
                       />
                     </div>
                     <div className="w-full flex flex-col gap-2">
                       <label
-                        className="text-[14px]"
-                        font-medium
+                        className="text-[14px] font-medium"
                         htmlFor="email"
                       >
-                        Email <span className="text-warning">*</span>
+                        {t("demo.demoFieldEmail")}{" "}
+                        <span className="text-warning">*</span>
                       </label>
                       <input
                         id="email"
-                        name="email"
+                        {...register("email", { required: true })}
                         type="email"
                         className="rounded-md p-4 border border-neutral-100 focus:outline-none"
-                        placeholder="Input Email"
+                        placeholder={t("demo.demoFieldEmailPh")}
                       />
                     </div>
                   </div>
@@ -190,30 +232,31 @@ export function DemoContent() {
                         className="text-[14px] font-medium"
                         htmlFor="company_name"
                       >
-                        Company Name <span className="text-warning">*</span>
+                        {t("demo.demoFieldCompany")}{" "}
+                        <span className="text-warning">*</span>
                       </label>
                       <input
                         id="company_name"
-                        name="company_name"
+                        {...register("company_name", { required: true })}
                         type="text"
                         className="rounded-md p-4 border border-neutral-100 focus:outline-none"
-                        placeholder="Input Company Name"
+                        placeholder={t("demo.demoFieldCompanyPh")}
                       />
                     </div>
                     <div className="w-full flex flex-col gap-2">
                       <label
-                        className="text-[14px]"
-                        font-medium
+                        className="text-[14px] font-medium"
                         htmlFor="phone"
                       >
-                        Phone Number <span className="text-warning">*</span>
+                        {t("demo.demoFieldPhone")}{" "}
+                        <span className="text-warning">*</span>
                       </label>
                       <input
                         id="phone"
-                        name="phone"
+                        {...register("phone", { required: true })}
                         type="number"
                         className="rounded-md p-4 border border-neutral-100 focus:outline-none"
-                        placeholder="Input Phone Number"
+                        placeholder={t("demo.demoFieldPhonePh")}
                       />
                     </div>
                   </div>
@@ -225,7 +268,8 @@ export function DemoContent() {
                         className="text-[14px] font-medium"
                         htmlFor="country"
                       >
-                        Country <span className="text-warning">*</span>
+                        {t("demo.demoFieldCountry")}{" "}
+                        <span className="text-warning">*</span>
                       </label>
 
                       <Listbox
@@ -239,7 +283,7 @@ export function DemoContent() {
                                 selectedCountry?.label
                               ) : (
                                 <span className="text-neutral-400">
-                                  Select Country
+                                  {t("demo.demoFieldCountryPh")}
                                 </span>
                               )}
                             </span>
@@ -262,7 +306,7 @@ export function DemoContent() {
                                   ?.filter((item) =>
                                     item?.label
                                       .toLowerCase()
-                                      .includes(searchTerm)
+                                      .includes(searchTerm.toLowerCase())
                                   )
                                   .map((language, idx) => (
                                     <Listbox.Option
@@ -297,11 +341,11 @@ export function DemoContent() {
                     </div>
                     <div className="w-full flex flex-col gap-2">
                       <label
-                        className="text-[14px]"
-                        font-medium
+                        className="text-[14px] font-medium"
                         htmlFor="language"
                       >
-                        Language <span className="text-warning">*</span>
+                        {t("demo.demoFieldLanguage")}{" "}
+                        <span className="text-warning">*</span>
                       </label>
                       <Listbox
                         value={selectedLanguage}
@@ -314,7 +358,7 @@ export function DemoContent() {
                                 selectedLanguage?.label
                               ) : (
                                 <span className="text-neutral-400">
-                                  Select Language
+                                  {t("demo.demoFieldLanguagePh")}
                                 </span>
                               )}
                             </span>
@@ -365,11 +409,11 @@ export function DemoContent() {
                   <div className="flex flex-col lg:flex-row justify-between gap-4">
                     <div className="w-full flex flex-col gap-2">
                       <label
-                        className="text-[14px]"
-                        font-medium
+                        className="text-[14px] font-medium"
                         htmlFor="company_size"
                       >
-                        Company Size <span className="text-warning">*</span>
+                        {t("demo.demoFieldCompanySize")}{" "}
+                        <span className="text-warning">*</span>
                       </label>
                       <Listbox
                         value={selectedCompany}
@@ -379,10 +423,12 @@ export function DemoContent() {
                           <Listbox.Button className="border border-neutral-100 relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none">
                             <span className="block truncate">
                               {selectedCompany ? (
-                                selectedCompany?.label
+                                `${selectedCompany?.label} ${t(
+                                  "demo.employee"
+                                )}`
                               ) : (
                                 <span className="text-neutral-400">
-                                  Select Company Size
+                                  {t("demo.demoFieldCompanySizePh")}
                                 </span>
                               )}
                             </span>
@@ -416,7 +462,7 @@ export function DemoContent() {
                                             : "font-normal"
                                         }`}
                                       >
-                                        {company.label}
+                                        {company.label} {t("demo.employee")}
                                       </span>
                                     </>
                                   )}
@@ -429,11 +475,11 @@ export function DemoContent() {
                     </div>
                     <div className="w-full flex flex-col gap-2">
                       <label
-                        className="text-[14px]"
-                        font-medium
+                        className="text-[14px] font-medium"
                         htmlFor="interest"
                       >
-                        Primary Interest <span className="text-warning">*</span>
+                        {t("demo.demoFieldInterest")}{" "}
+                        <span className="text-warning">*</span>
                       </label>
                       <Listbox
                         value={selectedInterest}
@@ -443,10 +489,10 @@ export function DemoContent() {
                           <Listbox.Button className="border border-neutral-100 relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none">
                             <span className="block truncate">
                               {selectedInterest ? (
-                                selectedInterest?.label
+                                t(`demo.${selectedInterest?.label}`)
                               ) : (
                                 <span className="text-neutral-400">
-                                  Select Primary Interest
+                                  {t("demo.demoFieldInterestPh")}
                                 </span>
                               )}
                             </span>
@@ -480,7 +526,7 @@ export function DemoContent() {
                                             : "font-normal"
                                         }`}
                                       >
-                                        {interest.label}
+                                        {t(`demo.${interest.label}`)}
                                       </span>
                                     </>
                                   )}
@@ -495,27 +541,28 @@ export function DemoContent() {
                 </div>
 
                 <p>
-                  By clicking <strong>Request</strong>, you accept our{" "}
+                  {t("demo.agreement")}
+                  {/* By clicking <strong>Request</strong>, you accept our{" "}
                   <Link href="/" className="text-link">
                     Subscription Agreement
                   </Link>{" "}
                   and{" "}
                   <Link href="/" className="text-link">
                     Privacy Policy
-                  </Link>
+                  </Link> */}
                 </p>
               </div>
             </div>
             <div className="shadow-md mt-8 flex justify-end items-center gap-4 w-full p-8 rounded-lg border border-neutral-250">
               <Button
-                title="Batal"
+                title={t("demo.cancel")}
                 className="border-neutral-300 text-neutral-300"
                 type="button"
                 onClick={onClickHome}
               />
               <Button
                 isPrimary
-                title="Request"
+                title={t("demo.request")}
                 className="w-48"
                 type="submit"
               />
@@ -525,22 +572,19 @@ export function DemoContent() {
           <div className="flex flex-col items-center justify-center gap-4">
             <SuccessDemo />
             <div className="text-center">
-              <h3 className="font-bold">
-                Your request has been sent to memos team!
-              </h3>
-              <h4 className="mt-1">
-                You{`’`}ll be notified when someone at memos team will open it
-              </h4>
+              <h3 className="font-bold">{t("demo.successDemoHeading")}</h3>
+              <h4 className="mt-1">{t("demo.successDemoSubHeading")}</h4>
             </div>
             <Button
               isPrimary
-              title="Kembali ke halaman utama"
+              title={t("demo.backToHome")}
               onClick={onClickHome}
               className="mt-4"
             />
           </div>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 }

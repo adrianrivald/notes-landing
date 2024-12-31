@@ -238,7 +238,7 @@ function NavMenuDesktop({
             languages={languages}
             onChangeLanguage={onChangeLanguage}
           />
-          <Link href="https://memos.co.id/demo" target="_blank">
+          <Link href="/demo">
             <Button title={t("navbar.tryDemo")} isPrimary />
           </Link>
         </div>

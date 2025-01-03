@@ -33,7 +33,7 @@
     "contactFieldEmail": "Email Address",
     "contactFieldEmailPh": "name@email.com",
     "contactFieldQuestion": "Your Question",
-    "contactFieldQuestionPh": "How can i get the Memos product?",
+    "contactFieldQuestionPh": "How can i get the Notes product?",
     "contactSubmit": "Submit Your Question",
     "bannerHeading": "See firsthand how our system makes your work more efficient."
   },
@@ -92,8 +92,8 @@
     "interestOpt3": "I am a Doctor",
     "cancel": "Cancel",
     "request": "Request",
-    "successDemoHeading" : "Your request has been sent to Memos Team!",
-    "successDemoSubHeading": "You'll be notified if someone in Memos Team replies it",
+    "successDemoHeading" : "Your request has been sent to Notes Team!",
+    "successDemoSubHeading": "You'll be notified if someone in Notes Team replies it",
     "backToHome": "Back to home"
   }
 }

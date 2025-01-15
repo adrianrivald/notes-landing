@@ -6,6 +6,7 @@ import { appWithTranslation } from "next-i18next";
 import Script from "next/script";
 import { useRouter } from "next/router";
 import { gtmVirtualPageView } from "../libs";
+import Head from "next/head";
 
 export function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -23,6 +24,12 @@ export function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
+      <Head>
+        <meta
+          name="google-site-verification"
+          content="jAm_Wk_vp2LhU86qaZmD4phSUCHbuWYtEe9gqrQk8qI"
+        />
+      </Head>
       <Script
         async
         src="https://www.googletagmanager.com/gtag/js?id=G-PEGTBQVR2N"

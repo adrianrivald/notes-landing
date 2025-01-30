@@ -139,6 +139,22 @@ function NavMenuMobile({
           } bg-white px-4 py-4 mt-2 relative w-full`}
         >
           <nav id="menus" className="flex-col flex gap-8 text-base">
+            <Link
+              href="/"
+              className={`hover:text-primary-500 cursor-pointer ${
+                pathname === "/" ? "font-bold text-primary-500" : ""
+              }`}
+            >
+              {t("navbar.home")}
+            </Link>
+            <Link
+              href="/about"
+              className={`hover:text-primary-500 cursor-pointer ${
+                pathname.includes("/about") ? "font-bold text-primary-500" : ""
+              }`}
+            >
+              {t("navbar.company")}
+            </Link>
             <div
               onClick={onClickLanguage}
               className="hover:text-primary-500 cursor-pointer flex justify-between items-center"
@@ -230,6 +246,28 @@ function NavMenuDesktop({
             className="cursor-pointer"
           />
         </div>
+
+        <nav
+          id="menus"
+          className="hidden lg:flex items-center gap-16 text-base"
+        >
+          <Link
+            href="/"
+            className={`hover:text-primary-500 cursor-pointer ${
+              pathname === "/" ? "font-bold text-primary-500" : ""
+            }`}
+          >
+            {t("navbar.home")}
+          </Link>
+          <Link
+            href="/about"
+            className={`hover:text-primary-500 cursor-pointer ${
+              pathname.includes("/about") ? "font-bold text-primary-500" : ""
+            }`}
+          >
+            {t("navbar.company")}
+          </Link>
+        </nav>
 
         {/* Right section */}
         <div id="right" className="hidden lg:flex gap-3">

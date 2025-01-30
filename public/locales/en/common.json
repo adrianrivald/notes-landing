@@ -46,6 +46,16 @@
     "tryDemo": "Try the free demo",
     "consultYourNeeds" : "Consult your needs"
   },
+  "about": {
+    "aboutHeading": "CRM kesehatan Notes berfungsi sebagai alat utama untuk mengelola hubungan antara fasilitas kesehatan dan pasien secara lebih terstruktur dan efisien.",
+    "aboutSubHeading": "Sebagai CRM Kesehatan No. 1 di Indonesia, solusi kami dirancang untuk mengintegrasikan Customer Relationship Management (CRM) dengan sistem manajemen rumah sakit secara seamless. ",
+    "foundedIn": "Didirikan pada tahun",
+    "location": "Lokasi",
+    "vision": "Visi Kami",
+    "visionContent": "Menjadi platform CRM Kesehatan terdepan yang memberdayakan rumah sakit untuk menghadirkan layanan kesehatan yang terintegrasi, efisien, dan berfokus pada pengalaman pasien, guna menciptakan sistem perawatan yang lebih cerdas, personal, dan unggul di masa depan.",
+    "mission": "Misi Kami",
+    "missionContent1": "Meningkatkan integrasi manajemen data pasien rumah sakit dengan sistem yang menghubungkan seluruh informasi secara real-time, memastikan akses cepat dan akurat. Mengoptimalkan efisiensi operasional rumah sakit melalui solusi digital yang mengotomatisasi proses administratif dan klinis, serta memfasilitasi integrasi dengan sistem informasi kesehatan nasional yang terstandarisasi untuk menciptakan layanan kesehatan yang lebih terintegrasi, efektif, dan berkualitas."
+  },
   "footer": {
     "footerHeadline": "Medical excellence starts with a system that understands you.",
     "ourSocmed": "Our Social Media",

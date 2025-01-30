@@ -43,6 +43,11 @@ export function AboutContent({ t }: AboutContentProps) {
       </div>
 
       <div className={twMerge("mt-4 p-4 lg:p-16", maxWidthContainer)}>
+        <p className="mt-4 text-[20px]">{t("about.aboutPar1")}</p>
+        <p className="mt-4 text-[20px]">{t("about.aboutPar2")}</p>
+        <p className="mt-4 text-[20px]">{t("about.aboutPar3")}</p>
+      </div>
+      <div className={twMerge("p-4 lg:p-16", maxWidthContainer)}>
         <div className="flex flex-col lg:flex-row justify-between gap-8">
           {/* Founded */}
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-16 w-full lg:w-1/2">
@@ -70,13 +75,13 @@ export function AboutContent({ t }: AboutContentProps) {
               <h3 className="text-primary-500 text-[24px] font-bold">
                 {t("about.vision")}
               </h3>
-              <p className="mt-2 text-[20px]">{t("about.visionContent")}</p>
+              <p className="mt-4 text-[20px]">{t("about.visionContent")}</p>
             </div>
             <div id="mission" className="mt-8">
               <h3 className="text-primary-500 text-[24px] font-bold">
                 {t("about.mission")}
               </h3>{" "}
-              <p className="mt-2 text-[20px]">{t("about.missionContent1")}</p>
+              <p className="mt-4 text-[20px]">{t("about.missionContent1")}</p>
             </div>
           </div>
         </div>

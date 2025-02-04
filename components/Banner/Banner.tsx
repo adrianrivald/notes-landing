@@ -23,22 +23,27 @@ export function Banner({ t }: BannerProps) {
             <Button title={t("home.tryDemo")} className="w-[220px]" />
           </Link>
           <img
+            alt="demo-illustration-1"
             src="/assets/images/demo/1.png"
             className="hidden lg:block absolute right-96 top-24"
           />
           <img
+            alt="demo-illustration-2"
             src="/assets/images/demo/2.png"
             className="hidden lg:block absolute right-60 top-16"
           />
           <img
+            alt="demo-illustration-3"
             src="/assets/images/demo/3.png"
             className="hidden lg:block absolute right-44 top-24"
           />
           <img
+            alt="demo-illustration-4"
             src="/assets/images/demo/4.png"
             className="hidden lg:block absolute right-[26rem] top-56"
           />
           <img
+            alt="demo-illustration-5"
             src="/assets/images/demo/5.png"
             className="hidden lg:block absolute right-44 top-36"
           />

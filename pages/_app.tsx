@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Header, Footer } from "../components";
+import { Header, Footer, WhatsappButton } from "../components";
 import { appWithTranslation } from "next-i18next";
 import Script from "next/script";
 import { useRouter } from "next/router";
@@ -65,6 +65,7 @@ export function App({ Component, pageProps }: AppProps) {
           <Footer />
         </div>
       </section>
+      <WhatsappButton />
     </>
   );
 }
